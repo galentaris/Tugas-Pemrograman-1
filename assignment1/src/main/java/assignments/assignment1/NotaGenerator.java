@@ -19,16 +19,6 @@ public class NotaGenerator {
             }
         } return false;
     }
-    //Membuat methode untuk validasi string apakah mengandung letter atau tidak
-    public static boolean cekLetter(String str){
-        str = str.replaceAll("\\s","");
-        char[] arraychar = str.toCharArray();
-        for(char c: arraychar){                         //Looping untuk mengecek satupersatu huruf pada string apakah mengandung letter atau tidak
-            if (!Character.isLetter(c)){                //Saat string mengandung yang bukan letter akan me-return true
-                return true;
-            }
-        } return false;
-    }
     public static void main(String[] args) {
         while (true){
             printMenu();
@@ -43,10 +33,6 @@ public class NotaGenerator {
 ================================
 Masukkan nama Anda:\n""");
                 String nama = input.nextLine();
-                while (cekLetter(nama)){                //Looping untuk memvalidasi nama apakah mengandung yang bukan letter
-                    System.out.println("Nama hanya menerima letter");
-                    nama = input.nextLine();
-                }
                 System.out.println("Masukkan nomor handphone Anda:");
                 String nomor = input.nextLine();
                 while (cekDigit(nomor)){                //Looping untuk memvalidasi nomor apakah mengandung yang bukan digit
@@ -60,10 +46,6 @@ Masukkan nama Anda:\n""");
 ================================
 Masukkan nama Anda:\n""");
                 String nama = input.nextLine();
-                while (cekLetter(nama)){                //Looping untuk memvalidasi nomor apakah mengandung yang bukan letter
-                    System.out.println("Nama hanya menerima letter");
-                    nama = input.nextLine();
-                }
                 System.out.println("Masukkan nomor handphone Anda:");
                 String nomor = input.nextLine();
                 while (cekDigit(nomor)){                //Looping untuk memvalidasi nomor apakah mengandung yang bukan digit
@@ -75,7 +57,7 @@ Masukkan nama Anda:\n""");
                 System.out.println("Masukkan paket laundry:");
                 String paket = input.nextLine();
                 while (!paket.equalsIgnoreCase("reguler") & !paket.equalsIgnoreCase("express") & !paket.equalsIgnoreCase("fast")){  //Looping untuk validasi input paket
-                    if (paket.equals("?")){showPaket();}             //Saat user menginput "?"
+                    if (paket.equals("?")) showPaket();             //Saat user menginput "?"
                     else {                                           //Saat user menginpput selain 3 paket diatas dan ?
                         System.out.printf("""
 Paket %s tidak diketahui
@@ -86,10 +68,10 @@ Paket %s tidak diketahui
                 System.out.println("Masukkan berat cucian Anda [Kg]:");
                 int berat2 = 0;
                 while(true){                                                    //Looping untuk validasi berat
-                    try{
+                    try {
                         String berat = input.nextLine();
                         berat2 = Integer.parseInt(berat);
-                        if (berat2 <= 0) {throw new NumberFormatException();}   //Saat berat negatif dan 0
+                        if (berat2 <= 0) throw new NumberFormatException();   //Saat berat negatif dan 0
                         else if (berat2 < 2){                                   //Saat berat kurang dari 2 kg akan dianggap 1 kg
                             System.out.println("Cucian kurang dari 2 kg, maka cucian akan dianggap sebagai 2 kg Nota Laundry");
                             berat2 = 2;
@@ -139,11 +121,14 @@ Paket %s tidak diketahui
             checksum += num;
         }
         byte[] arrayAscii = idNama.getBytes();          //Mengubah nama menjadi ascii code dalam array
+        int num = 0;
         for(int ascii:arrayAscii){                      //Looping untuk menjumlahkan nilai pada nama
-            int num = ascii - 64;                       //Karena nilai ascii code A 65, maka dikurangi 64 agar menjadi 1
+            if (ascii <= 90 & ascii >= 65) num = ascii - 64;         //Saat user menginput nama dengan huruf, Karena nilai ascii code A = 65, maka dikurangi 64 agar menjadi 1
+            else if (ascii <= 57 & ascii >= 48) num = ascii - 48;    //Saat user menginput nama dengan angka, karena nilai ascii kode 0 = 48, maka dikurangi 48 agar menjadi 0
+            else num = 7;                                            //Saat user menginput nama dengan selain angka dan huruf, maka num bernilai 7
             checksum += num; 
         }
-        checksum += 7;
+        checksum += 7;                                  //Menambahkan checksum dengan nilai 7 karena tanda "-"
         return checksum;
     }
     //Methode untuk fitur generate Nota
