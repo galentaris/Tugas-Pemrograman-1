@@ -95,7 +95,7 @@ Paket %s tidak diketahui
         System.out.println("[0] Exit");
     }
     //Methode untuk mem-print penjelasan paket
-    private static void showPaket() {
+    public static void showPaket() {
         System.out.println("+-------------Paket-------------+");
         System.out.println("| Express | 1 Hari | 12000 / Kg |");
         System.out.println("| Fast    | 2 Hari | 10000 / Kg |");
@@ -105,7 +105,6 @@ Paket %s tidak diketahui
     //Methode untuk fitur generate id
     public static String generateId(String nama, String nomorHP){
         String[] namaSplit = nama.split(" ");
-        nomorHP = nomorHP.replaceAll("\\s","");
         String[] nomorArray = nomorHP.split("");
         String namaDepan = namaSplit[0].toUpperCase();
         String checksum = Integer.toString(hitungChecksum(nomorArray, namaDepan) % 100);
@@ -145,15 +144,14 @@ Paket %s tidak diketahui
             hargaperkg = 12000;
             durasi = 1;
         }
-        else if(paket.equalsIgnoreCase("fast")){                                    //Saat user menginput fast
-            hargaperkg =10000;
+        else if (paket.equalsIgnoreCase("fast")){                                    //Saat user menginput fast
+            hargaperkg = 10000;
             durasi = 2;
         }
         else if (paket.equalsIgnoreCase("reguler")){                                //Saat user menginput reguler
             hargaperkg = 7000;
             durasi = 3;
         }
-        System.out.println("Nota Laundry");
         return String.format("""      
 ID    : %s
 Paket : %s
@@ -161,5 +159,37 @@ Harga :
 %d kg x %d = %d
 Tanggal Terima  : %s
 Tanggal Selesai : %s""", id, paket.toLowerCase(), berat, hargaperkg, berat* hargaperkg, tanggalTerima, formatter.format(date.plusDays(durasi)));
+    }
+    //Membuat methode generateNota dengan overloading dari methode diatas saat sudah diskon
+    public static String generateNota(String id, String paket, int berat, String tanggalTerima, int bonusCounter){
+        String[] dateArray = tanggalTerima.split("/");                              //Memisahkan tanggal ke dalam array
+        int day = Integer.parseInt(dateArray[0]);
+        int month = Integer.parseInt(dateArray[1]);
+        int year = Integer.parseInt(dateArray[2]);
+        LocalDate date = LocalDate.of(year,month,day);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");    //Formatting tanggal terima
+        int hargaperkg = 0;
+        int durasi = 0;
+        if (paket.equalsIgnoreCase("express")){                                     //Saat user menginput express
+            hargaperkg = 12000;
+            durasi = 1;
+        }
+        else if (paket.equalsIgnoreCase("fast")){                                   //Saat user menginput fast
+            hargaperkg = 10000;
+            durasi = 2;
+        }
+        else if (paket.equalsIgnoreCase("reguler")){                                //Saat user menginput reguler
+            hargaperkg = 7000;
+            durasi = 3;
+        }
+        int totalHarga = berat*hargaperkg;
+        int totalHargaDiskon = totalHarga/2;
+        return String.format(""" 
+ID    : %s
+Paket : %s
+Harga :
+%d kg x %d = %d = %d (Discount member 50%%!!!)
+Tanggal Terima  : %s
+Tanggal Selesai : %s""", id, paket.toLowerCase(), berat, hargaperkg, totalHarga, totalHargaDiskon, tanggalTerima, formatter.format(date.plusDays(durasi)));
     }
 }
