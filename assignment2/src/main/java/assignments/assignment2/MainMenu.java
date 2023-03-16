@@ -8,9 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.ArrayList;
-
 import assignments.assignment1.NotaGenerator;
-
 import static assignments.assignment1.NotaGenerator.*;
 
 public class MainMenu {
@@ -20,7 +18,7 @@ public class MainMenu {
     private static Calendar cal = Calendar.getInstance();
     private static ArrayList<Nota> notaList = new ArrayList<Nota>();
     private static ArrayList<Member> memberList = new ArrayList<Member>();
-    private static int idNota = -1;
+    private static int idNota = -1; //idNota mulai dari -1 agar idNota mulai dari 0 saat ditambah 1
 
     public static void main(String[] args) {
         boolean isRunning = true;
@@ -55,7 +53,7 @@ public class MainMenu {
         } Member member = new Member(nama, noHP); //Memasukkan parameter ke dalam constructor member
         if (member.cekID(memberList, member.getID())) System.out.printf("Member dengan nama %s dan nomor hp %s sudah ada!\n", nama, noHP); //saat ID Member sudah ada dalam memberlist
         else {                                    //Saat ID Memberbelum ada di memmberlist akan memasukkan ID Member kedalam memberlist
-            System.out.printf("Berhasil membuat member dengan ID %s!\n",member.getID());
+            System.out.printf("Berhasil membuat member dengan ID %s!\n", member.getID());
             member.setArray(memberList, member);
         }
     }
@@ -107,24 +105,26 @@ Paket %s tidak diketahui
     //Methode untuk fitur List Nota
     private static void handleListNota() {
         System.out.printf("Terdaftar %d nota dalam sistem.\n", notaList.size());
-        for (Nota i : notaList){        //Looping untuk print status Nota
-            System.out.println(i.getStatus());
+        for (Nota element : notaList){        //Looping untuk print status Nota
+            System.out.println(element.getStatus());
         }
     }
     //Methode untuk fitur List User
     private static void handleListUser() {
         System.out.printf("Terdaftar %d member dalam sistem.\n", memberList.size());
-        for (Member i : memberList){    //Looping untuk print ID dan Nama Lengkap
-            System.out.printf("- %s : %s\n", i.getID(), i.getNama());
+        for (Member element : memberList){    //Looping untuk print ID dan Nama Lengkap
+            System.out.printf("- %s : %s\n", element.getID(), element.getNama());
         }
     }
     //Methode untuk fitur Ambil Cucian
     private static void handleAmbilCucian() {
         System.out.println("Masukan ID nota yang akan diambil:");
         int inputIDNota = 0;
+        String inputID = "";
         while (true) {                                                  //Looping untuk validasi ID Nota
             try {
-                inputIDNota = Integer.parseInt(input.nextLine());
+                inputID = input.nextLine();
+                inputIDNota = Integer.parseInt(inputID);
                 if (inputIDNota < 0) throw new NumberFormatException(); //Saat user menginput idNota kurang dari 0
             }
             catch (NumberFormatException e) {
@@ -134,10 +134,10 @@ Paket %s tidak diketahui
             break;
         }
         Nota nota = new Nota();                                         //Inisiasi variabel nota agar bisa mengakses methode-methode didalam class Nota
-        if (!nota.cekIDNota(notaList, inputIDNota)) System.out.printf("Nota dengan ID %d tidak ditemukan!\n", inputIDNota); //Saat ID Nota tidak ada dalam List Nota
+        if (!nota.cekIDNota(notaList, inputIDNota)) System.out.printf("Nota dengan ID %s tidak ditemukan!\n", inputID); //Saat ID Nota tidak ada dalam List Nota
         else {                                                          //Saat ID Nota ada dalam List Nota
-            Nota nota2 = cariNota(inputIDNota);                         
-            System.out.println(nota2.ambilCucian(notaList));
+            nota = cariNota(inputIDNota);                         
+            System.out.println(nota.ambilCucian(notaList, inputID));
         }
     }
     //Methode untuk fitur Next Day
@@ -145,7 +145,7 @@ Paket %s tidak diketahui
         System.out.println("Dek Depe tidur hari ini... zzz...");
         cal.add(Calendar.DAY_OF_MONTH, 1);      //Menambah 1 hari pada waktu di program
         Nota nota = new Nota();                 //Membuat variabel nota agar dapat mengakses methode didalamnya
-        nota.setALLSisaHari(notaList);
+        nota.setALLSisaHari(notaList);          //Mengubah sisa waktu pengerjaan pada semua nota
         System.out.println("""
 Selamat pagi dunia!
 Dek Depe: It's CuciCuci Time.""");
@@ -165,15 +165,15 @@ Dek Depe: It's CuciCuci Time.""");
     }
     //Methode untuk mencari Member berdasarkan ID
     public static Member cariMember(String id){
-        for (Member i : memberList){                    //Looping untuk mengecek satupersatu ID member dalam memberlist
-            if (i.getID().equals(id)) return i;         //Saat ID member yang di input dan ID member yang ada dalam memberlist sama akan mereturn Member tersebut
+        for (Member element : memberList){                    //Looping untuk mengecek satupersatu ID member dalam memberlist
+            if (element.getID().equals(id)) return element;         //Saat ID member yang di input dan ID member yang ada dalam memberlist sama akan mereturn Member tersebut
         }
         return null;
     }
     //Methode untuk mencari Nota berdasarkan ID
     private static Nota cariNota(int inputIDNota){
-        for (Nota i : notaList){                        //Looping untuk mengecek satupersatu ID member dalam notalist
-            if (i.getIDNota() == inputIDNota) return i; //Saat ID Nota input dan ID Nota yang ada dalam notalist sama 
+        for (Nota element : notaList){                        //Looping untuk mengecek satupersatu ID member dalam notalist
+            if (element.getIDNota() == inputIDNota) return element; //Saat ID Nota input dan ID Nota yang ada dalam notalist sama 
         }
         return null;
     }

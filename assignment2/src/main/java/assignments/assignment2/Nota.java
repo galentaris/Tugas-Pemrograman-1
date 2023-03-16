@@ -59,15 +59,15 @@ public class Nota {
     }
     //Membuat methode cekIDNota
     public boolean cekIDNota(ArrayList<Nota> arr, int idNota){
-        for (Nota i : arr){                             //Looping untuk mengecek satupersatu idNota dalam notalist 
-            if (i.getIDNota() == idNota) return true;   
+        for (Nota element : arr){                             //Looping untuk mengecek satupersatu idNota dalam notalist 
+            if (element.getIDNota() == idNota) return true;   
         } return false;
     }
     //Membuat methode ambilCucian
-    public String ambilCucian(ArrayList<Nota> arr){
+    public String ambilCucian(ArrayList<Nota> arr, String input){
         if (isReady) this.removeNota(arr, this.idNota);     //Saat cucian sudah diambil, idNota tersebut akan di remove
         //Mereturn nota gagal diambil saat cucian belum ready, begitupun sebaliknya
-        return !isReady ? String.format("Nota dengan ID %d gagal diambil!", this.idNota):String.format("Nota dengan ID %d berhasil diambil!", this.idNota);
+        return !isReady ? String.format("Nota dengan ID %s gagal diambil!", input):String.format("Nota dengan ID %s berhasil diambil!", input);
     }
     //Membuat methode getSisaHari
     public int getSisaHari(){
@@ -79,11 +79,11 @@ public class Nota {
     }
     //Membuat methode setALLSisaHari untuk mengurangi sisa Hari pengerjaan class nota yang ada dalam notaList
     public void setALLSisaHari(ArrayList<Nota> arr){
-        for (Nota i : arr){
-            i.setSisaHari();
-            if (i.getSisaHari() <= 0) {         //Saat sisaHariPengerjaan kurang dari sama dengan 0 cucian pada nota tersebut akan siap diambil
-                i.isReady = true;
-                System.out.printf("Laundry dengan nota ID %d sudah dapat diambil!\n", i.getIDNota());
+        for (Nota element : arr){
+            element.setSisaHari();
+            if (element.getSisaHari() <= 0) {         //Saat sisaHariPengerjaan kurang dari sama dengan 0 cucian pada nota tersebut akan siap diambil
+                element.isReady = true;
+                System.out.printf("Laundry dengan nota ID %d sudah dapat diambil!\n", element.getIDNota());
             }
         }
     }
