@@ -9,6 +9,9 @@ import assignments.assignment3.nota.service.SetrikaService;
 import assignments.assignment3.user.Member;
 import assignments.assignment1.NotaGenerator;
 
+import static assignments.assignment3.nota.NotaManager.cal;
+import static assignments.assignment3.nota.NotaManager.fmt;
+
 public class MemberSystem extends SystemCLI {
     /**
      * Memproses pilihan dari Member yang masuk ke sistem ini sesuai dengan menu specific.
@@ -47,7 +50,7 @@ Paket %s tidak diketahui
                     continue;
                 } break;
             } 
-            Nota nota = new Nota(loginMember, berat, paket, tanggalMasuk);
+            Nota nota = new Nota(loginMember, berat, paket, fmt.format(cal.getTime()));
             LaundryService serviceSetrika = new SetrikaService();
             LaundryService serviceAntar = new AntarService();
             LaundryService serviceCuci = new CuciService();

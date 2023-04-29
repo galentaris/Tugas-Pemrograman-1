@@ -9,8 +9,6 @@ public abstract class SystemCLI {
     protected ArrayList<Member> memberList = new ArrayList<Member>();
     protected Member loginMember;
     protected Scanner in;
-    protected String tanggalMasuk;
-
     /**
      * Otentikasi pengguna dengan ID dan password yang diberikan dan memulai sesi pengguna.
      * Akan berhenti jika logout atau ID / Password salah.
@@ -19,9 +17,9 @@ public abstract class SystemCLI {
      * @param inputId -> ID user yang akan diautentikasi.
      * @param inputPassword -> password user yang akan diautentikasi.
      */
-    public void login(Scanner in, String inputId, String inputPassword, String tanggalMasuk){
+    public void login(Scanner in, String inputId, String inputPassword){
         Member authMember = authUser(inputId, inputPassword);
-        this.tanggalMasuk = tanggalMasuk;
+        
         if (authMember != null) {
             this.in = in;
             System.out.println("Login successful!");

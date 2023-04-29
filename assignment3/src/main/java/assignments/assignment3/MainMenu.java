@@ -96,7 +96,7 @@ public class MainMenu {
             System.out.println("ID atau password invalid.");
             return;
         }
-        systemCLI.login(in, inputId, inputPassword, fmt.format(cal.getTime()));
+        systemCLI.login(in, inputId, inputPassword);
     }
 
     /**

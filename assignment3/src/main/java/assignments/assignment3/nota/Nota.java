@@ -16,6 +16,7 @@ public class Nota {
     private int id;
     private String tanggalMasuk;
     private boolean isDone;
+    private long minusHarga;
     public static int totalNota = 0;
 
     public Nota(Member member, int berat, String paket, String tanggal) {
@@ -30,11 +31,11 @@ public class Nota {
             this.baseHarga = 12000;
         }
         else if(this.paket.equalsIgnoreCase("fast")) {
-            this.sisaHariPengerjaan = 2;             //Saat user menginput fast
+            this.sisaHariPengerjaan = 2;              //Saat user menginput fast
             this.baseHarga = 10000;
         }
         else if (this.paket.equalsIgnoreCase("reguler")) {
-            this.sisaHariPengerjaan = 3;         //Saat user menginput reguler
+            this.sisaHariPengerjaan = 3;              //Saat user menginput reguler
             this.baseHarga = 7000;
         }
     }
@@ -63,15 +64,21 @@ public class Nota {
     }
     public void toNextDay() {
         this.sisaHariPengerjaan -= 1;
+        this.calculateMinusHarga();
     }
 
     public long calculateHarga(){
-        long totalHarga = this.baseHarga*this.berat;
+        long tempTotalHarga = this.baseHarga*this.berat;
         for (LaundryService service : services) {
-            totalHarga += service.getHarga(this.berat);
+            tempTotalHarga += service.getHarga(this.berat);
         }
-        if (this.sisaHariPengerjaan < 0) totalHarga += 2000*this.sisaHariPengerjaan; 
-        return totalHarga;
+        return tempTotalHarga;
+    }
+
+    public void calculateMinusHarga() {
+        if (this.calculateHarga() > Math.abs(this.minusHarga)) {
+            if (this.sisaHariPengerjaan < 0) this.minusHarga += 2000;
+        }
     }
 
     public static String getNotaStatus(){
@@ -93,7 +100,7 @@ public class Nota {
 --- SERVICE LIST ---
 %s
 Harga Akhir: %d %s
-""", this.id, NotaGenerator.generateNota(this.member.getId(), this.paket, this.berat, this.tanggalMasuk), this.printService(), this.calculateHarga(), kompensasi);
+""", this.id, NotaGenerator.generateNota(this.member.getId(), this.paket, this.berat, this.tanggalMasuk), this.printService(), this.calculateHarga() - this.minusHarga, kompensasi);
     }
 
     public void setIsDone() {
