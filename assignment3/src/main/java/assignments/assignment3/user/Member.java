@@ -1,11 +1,16 @@
 package assignments.assignment3.user;
 
+import java.util.ArrayList;
+
+import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.nota.Nota;
+import assignments.assignment3.user.menu.MemberSystem;
 public class Member {
     protected String id;
     protected String password;
     protected String nama;
-    protected Nota[] notaList = new Nota[0];
+    protected String noHPString;
+    protected ArrayList<Nota> notaList = new ArrayList<Nota>();
 
     public Member(String nama, String id, String password) {
         this.nama = nama;
@@ -30,7 +35,7 @@ public class Member {
      * @param nota Nota object untuk ditambahkan.
      */
     public void addNota(Nota nota) {
-        // TODO
+        this.notaList.add(nota);
     }
 
     /**
@@ -40,21 +45,21 @@ public class Member {
      * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
      */
     protected boolean authenticate(String password) {
-        // TODO
+        if (password.equals(this.password)) return true;
         return false;
     }
 
     // Dibawah ini adalah getter
 
     public String getNama() {
-        return nama;
+        return this.nama;
     }
 
     public String getId() {
-        return id;
+        return this.id;
     }
 
-    public Nota[] getNotaList() {
-        return notaList;
+    public ArrayList<Nota> getNotaList() {
+        return this.notaList;
     }
 }

@@ -2,12 +2,14 @@ package assignments.assignment3.user.menu;
 
 import assignments.assignment3.user.Member;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class SystemCLI {
-    protected Member[] memberList = new Member[0];
+    protected ArrayList<Member> memberList = new ArrayList<Member>();
     protected Member loginMember;
     protected Scanner in;
+    protected String tanggalMasuk;
 
     /**
      * Otentikasi pengguna dengan ID dan password yang diberikan dan memulai sesi pengguna.
@@ -17,9 +19,9 @@ public abstract class SystemCLI {
      * @param inputId -> ID user yang akan diautentikasi.
      * @param inputPassword -> password user yang akan diautentikasi.
      */
-    public void login(Scanner in, String inputId, String inputPassword){
+    public void login(Scanner in, String inputId, String inputPassword, String tanggalMasuk){
         Member authMember = authUser(inputId, inputPassword);
-
+        this.tanggalMasuk = tanggalMasuk;
         if (authMember != null) {
             this.in = in;
             System.out.println("Login successful!");
@@ -83,6 +85,13 @@ public abstract class SystemCLI {
             }
         }
         return false;
+    }
+
+    
+    public void printMemberList(){
+        for (Member i : memberList) {
+            System.out.println(i.getId());
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package assignments.assignment3.user.menu;
 
 import assignments.assignment3.nota.Nota;
+import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.Member;
 
@@ -12,12 +13,10 @@ public class EmployeeSystem extends SystemCLI {
      * Membuat object baru EmployeeSystem dan mendaftarkan Employee pada CuciCuci
      */
     public EmployeeSystem() {
-        memberList = new Member[]{
-                new Employee("Dek Depe", "akuDDP"),
-                new Employee("Depram", "musiktualembut"),
-                new Employee("Lita Duo", "gitCommitPush"),
-                new Employee("Ivan Hoshimachi", "SuamiSahSuisei"),
-        };
+        memberList.add(new Employee("Dek Depe", "akuDDP"));
+        memberList.add(new Employee("Depram", "musiktualembut"));
+        memberList.add(new Employee("Lita Duo", "gitCommitPush"));
+        memberList.add(new Employee("Ivan Hoshimachi", "SuamiSahSuisei"));
     }
 
     /**
@@ -29,7 +28,16 @@ public class EmployeeSystem extends SystemCLI {
     @Override
     protected boolean processChoice(int choice) {
         boolean logout = false;
-        // TODO:
+        if (choice == 1) {
+            System.out.printf("Stand back! %s beginning to nyuci!\n", loginMember.getNama());
+            System.out.println(Nota.kerjakan());
+        }
+        else if (choice == 2) {
+            System.out.println(Nota.getNotaStatus());
+        }
+        else if (choice == 3) {
+            logout = true;
+        }
         return logout;
     }
 
@@ -42,4 +50,5 @@ public class EmployeeSystem extends SystemCLI {
         System.out.println("2. Display List Nota");
         System.out.println("3. Logout");
     }
+
 }

@@ -5,6 +5,7 @@ import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.EmployeeSystem;
 import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment3.user.menu.SystemCLI;
+import assignments.assignment1.NotaGenerator;
 
 import java.util.Scanner;
 
@@ -67,9 +68,12 @@ public class MainMenu {
         String nama = in.nextLine();
         System.out.println("Masukan nomor handphone Anda: ");
         String noHp = in.nextLine();
+        while (NotaGenerator.cekDigit(noHp)){                   //Looping untuk mengecek apakah hp itu hanya terdiri dari angka
+            System.out.println("Field nomor hp hanya menerima digit.");
+            noHp = in.nextLine();
+        }
         System.out.println("Masukan password Anda: ");
         String password = in.nextLine();
-
         Member registeredMember = loginManager.register(nama, noHp, password);
         if(registeredMember == null){
             System.out.printf("User dengan nama %s dan nomor hp %s sudah ada!\n", nama, noHp);
@@ -77,6 +81,7 @@ public class MainMenu {
         }
         System.out.printf("Berhasil membuat user dengan ID %s!\n", registeredMember.getId());
     }
+    
 
     /**
      * Meminta user untuk login dan memulai SystemCLI yang sesuai.
@@ -87,18 +92,18 @@ public class MainMenu {
         System.out.print("Masukan password Anda: ");
         String inputPassword = in.nextLine();
         SystemCLI systemCLI = loginManager.getSystem(inputId);
-        if(systemCLI == null){
+        if (systemCLI == null){
             System.out.println("ID atau password invalid.");
             return;
         }
-        systemCLI.login(in, inputId, inputPassword);
+        systemCLI.login(in, inputId, inputPassword, fmt.format(cal.getTime()));
     }
 
     /**
      * Menampilkan menu
      */
     private void displayMenu() {
-        System.out.println("Selamat datang di CuciCuci System!");
+        System.out.println("\nSelamat datang di CuciCuci System!");
         System.out.printf("Sekarang tanggal %s\n", fmt.format(cal.getTime()));
         System.out.println("1. Login");
         System.out.println("2. Register Member");
