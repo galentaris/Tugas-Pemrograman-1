@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -24,7 +25,7 @@ class MemberSystemTest {
     void setUp() {
         Nota.totalNota = 0;
         Employee.employeeCount = 0;
-        NotaManager.notaList = new Nota[0];
+        NotaManager.notaList = new ArrayList<Nota>();
         NotaManager.cal.set(1998, Calendar.DECEMBER, 28);
     }
 
@@ -55,12 +56,12 @@ class MemberSystemTest {
                 .thenReturn("x"); // No AntarService
 
         memberSystem.login(scanner, "1", "password");
-        Nota nota = member.getNotaList()[0];
-        assertEquals(1, member.getNotaList().length);
+        Nota nota = member.getNotaList().get(0);
+        assertEquals(1, member.getNotaList().size());
         assertEquals("Reguler", nota.getPaket());
         assertEquals("28/12/1998", nota.getTanggal());
         assertEquals(5, nota.getBerat());
-        assertEquals(1, nota.getServices().length);
+        assertEquals(1, nota.getServices().size());
     }
 
     @Test
@@ -82,13 +83,13 @@ class MemberSystemTest {
                 .thenReturn("x"); // No AntarService
 
         memberSystem.login(scanner, "1", "password");
-        Nota nota = member.getNotaList()[0];
-        assertEquals(1, member.getNotaList().length);
+        Nota nota = member.getNotaList().get(0);
+        assertEquals(1, member.getNotaList().size());
         assertEquals("Reguler", nota.getPaket());
         assertEquals(2, nota.getBerat());
-        assertEquals(2, nota.getServices().length);
-        assertTrue(nota.getServices()[1] instanceof SetrikaService);
-        assertEquals(1, NotaManager.notaList.length);
+        assertEquals(2, nota.getServices().size());
+        assertTrue(nota.getServices().get(1) instanceof SetrikaService);
+        assertEquals(1, NotaManager.notaList.size());
         assertEquals("28/12/1998", nota.getTanggal());
 
     }
@@ -112,13 +113,13 @@ class MemberSystemTest {
                 .thenReturn("");  // AntarService
 
         memberSystem.login(scanner, "1", "password");
-        Nota nota = member.getNotaList()[0];
-        assertEquals(1, member.getNotaList().length);
+        Nota nota = member.getNotaList().get(1);
+        assertEquals(1, member.getNotaList().size());
         assertEquals("Reguler", nota.getPaket());
         assertEquals(5, nota.getBerat());
-        assertEquals(2, nota.getServices().length);
-        assertTrue(nota.getServices()[1] instanceof AntarService);
-        assertEquals(1, NotaManager.notaList.length);
+        assertEquals(2, nota.getServices().size());
+        assertTrue(nota.getServices().get(1) instanceof AntarService);
+        assertEquals(1, NotaManager.notaList.size());
         assertEquals("28/12/1998", nota.getTanggal());
 
     }
@@ -142,14 +143,14 @@ class MemberSystemTest {
                 .thenReturn("");  // AntarService
 
         memberSystem.login(scanner, "1", "password");
-        Nota nota = member.getNotaList()[0];
-        assertEquals(1, member.getNotaList().length);
+        Nota nota = member.getNotaList().get(0);
+        assertEquals(1, member.getNotaList().size());
         assertEquals("Reguler", nota.getPaket());
         assertEquals(5, nota.getBerat());
-        assertEquals(3, nota.getServices().length);
-        assertTrue(nota.getServices()[1] instanceof SetrikaService);
-        assertTrue(nota.getServices()[2] instanceof AntarService);
-        assertEquals(1, NotaManager.notaList.length);
+        assertEquals(3, nota.getServices().size());
+        assertTrue(nota.getServices().get(1) instanceof SetrikaService);
+        assertTrue(nota.getServices().get(2) instanceof AntarService);
+        assertEquals(1, NotaManager.notaList.size());
         assertEquals("28/12/1998", nota.getTanggal());
     }
 

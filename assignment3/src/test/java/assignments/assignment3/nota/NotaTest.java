@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,7 +47,7 @@ class NotaTest {
         LaundryService additionalService = Mockito.mock(LaundryService.class);
         nota.addService(additionalService);
 
-        List<LaundryService> services = List.of(nota.getServices());
+        List<ArrayList<LaundryService>> services = List.of(nota.getServices());
         assertTrue(services.contains(additionalService));
     }
 

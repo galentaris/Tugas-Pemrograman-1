@@ -1,10 +1,12 @@
 package assignments.assignment3.nota;
 
+//Mengimport library yang dibutuhkan
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class NotaManager {
+    //Membuat atribut class NotaManager
     public static SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
     public static Calendar cal = Calendar.getInstance();
     static public ArrayList<Nota> notaList = new ArrayList<Nota>();

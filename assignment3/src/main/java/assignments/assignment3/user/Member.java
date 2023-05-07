@@ -1,17 +1,17 @@
 package assignments.assignment3.user;
-
+//Mengimport library
 import java.util.ArrayList;
 
-import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.nota.Nota;
-import assignments.assignment3.user.menu.MemberSystem;
 public class Member {
+    //Membuat atribut Member
     protected String id;
     protected String password;
     protected String nama;
     protected String noHPString;
     protected ArrayList<Nota> notaList = new ArrayList<Nota>();
 
+    //Membuat constructor Member
     public Member(String nama, String id, String password) {
         this.nama = nama;
         this.id = id;

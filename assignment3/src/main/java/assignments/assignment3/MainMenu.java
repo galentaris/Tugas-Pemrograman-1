@@ -1,5 +1,5 @@
 package assignments.assignment3;
-
+//Mengimport library-library yang dibutuhkan
 import assignments.assignment3.nota.NotaManager;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.EmployeeSystem;
@@ -13,6 +13,7 @@ import static assignments.assignment3.nota.NotaManager.cal;
 import static assignments.assignment3.nota.NotaManager.fmt;
 
 public class MainMenu {
+    //Membuat atribut MainMenu
     private final Scanner in;
     private final LoginManager loginManager;
 
@@ -25,7 +26,7 @@ public class MainMenu {
         MainMenu mainMenu = new MainMenu(new Scanner(System.in), new LoginManager(new EmployeeSystem(), new MemberSystem()));
         mainMenu.run();
     }
-
+    //Membuat constructor MainMenu
     public MainMenu(Scanner in, LoginManager loginManager) {
         this.in = in;
         this.loginManager = loginManager;
@@ -36,6 +37,7 @@ public class MainMenu {
      */
     public void run() {
         boolean exit = false;
+        //Looping untuk menjalankan program
         while (!exit) {
             displayMenu();
             int choice = in.nextInt();
@@ -46,9 +48,8 @@ public class MainMenu {
                 case 3 -> toNextDay();
                 case 4 -> exit = true;
                 default -> System.out.println("Pilihan tidak valid, silakan coba lagi.");
-            }
+            }    
         }
-
         in.close();
     }
 
@@ -68,20 +69,22 @@ public class MainMenu {
         String nama = in.nextLine();
         System.out.println("Masukan nomor handphone Anda: ");
         String noHp = in.nextLine();
-        while (NotaGenerator.cekDigit(noHp)){                   //Looping untuk mengecek apakah hp itu hanya terdiri dari angka
+
+        //Looping untuk mengecek apakah hp itu hanya terdiri dari angka
+        while (NotaGenerator.cekDigit(noHp)){                   
             System.out.println("Field nomor hp hanya menerima digit.");
             noHp = in.nextLine();
         }
+
         System.out.println("Masukan password Anda: ");
         String password = in.nextLine();
         Member registeredMember = loginManager.register(nama, noHp, password);
-        if(registeredMember == null){
+        if (registeredMember == null){ //Saat ada ID yang sama dengan user sebelumnya
             System.out.printf("User dengan nama %s dan nomor hp %s sudah ada!\n", nama, noHp);
             return;
         }
         System.out.printf("Berhasil membuat user dengan ID %s!\n", registeredMember.getId());
     }
-    
 
     /**
      * Meminta user untuk login dan memulai SystemCLI yang sesuai.
@@ -92,7 +95,7 @@ public class MainMenu {
         System.out.print("Masukan password Anda: ");
         String inputPassword = in.nextLine();
         SystemCLI systemCLI = loginManager.getSystem(inputId);
-        if (systemCLI == null){
+        if (systemCLI == null){     //Saat user input ID yang tidak ada dalam memberList
             System.out.println("ID atau password invalid.");
             return;
         }

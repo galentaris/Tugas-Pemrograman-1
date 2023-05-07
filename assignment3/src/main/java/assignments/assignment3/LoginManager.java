@@ -1,5 +1,5 @@
 package assignments.assignment3;
-
+//Mengimport libray-library yang dibutuhkan
 import assignments.assignment1.NotaGenerator;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.EmployeeSystem;
@@ -7,9 +7,11 @@ import assignments.assignment3.user.menu.MemberSystem;
 import assignments.assignment3.user.menu.SystemCLI;
 
 public class LoginManager {
+    //Membuat atribut LoginManager
     private final EmployeeSystem employeeSystem;
     private final MemberSystem memberSystem;
 
+    //Membuat constructor LoginManager
     public LoginManager(EmployeeSystem employeeSystem, MemberSystem memberSystem) {
         this.employeeSystem = employeeSystem;
         this.memberSystem = memberSystem;
@@ -22,10 +24,10 @@ public class LoginManager {
      * @return SystemCLI object yang sesuai dengan ID, null if  ID tidak ditemukan.
      */
     public SystemCLI getSystem(String id){
-        if(memberSystem.isMemberExist(id)){
+        if(memberSystem.isMemberExist(id)){ //Saat user menginput ID user berupa customer
             return memberSystem;
         }
-        if(employeeSystem.isMemberExist(id)){
+        if(employeeSystem.isMemberExist(id)){ //Saat user menginput ID user berupa karyawan
             return employeeSystem;
         }
         return null;

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,7 +30,7 @@ public class EmployeeSystemRunningTest {
         employeeSystem = new EmployeeSystem();
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        NotaManager.notaList = new Nota[0];
+        NotaManager.notaList = new ArrayList<Nota>();
     }
 
     @Test
@@ -65,7 +66,7 @@ public class EmployeeSystemRunningTest {
         String actual = outContent.toString().replaceAll("\\s+","");
         assertEquals(expectedOutput, actual);
         assertTrue(actual.contains("Logging out...".replaceAll("\\s+","")));
-        assertTrue(nota.getServices()[0].isDone());
+        assertTrue(nota.getServices().get(0).isDone());
     }
 
     @Test
@@ -105,8 +106,8 @@ public class EmployeeSystemRunningTest {
                 """.replaceAll("\\s+","");
         String actual = outContent.toString().replaceAll("\\s+","");
         assertEquals(expectedOutput, actual);
-        assertEquals(2,NotaManager.notaList.length);
-        assertTrue(nota2.getServices()[0].isDone());
+        assertEquals(2,NotaManager.notaList.size());
+        assertTrue(nota2.getServices().get(0).isDone());
     }
 
     @Test
@@ -152,8 +153,8 @@ public class EmployeeSystemRunningTest {
                 """.replaceAll("\\s+","");
         String actual = outContent.toString().replaceAll("\\s+","");
         assertEquals(expectedOutput, actual);
-        assertEquals(3,NotaManager.notaList.length);
-        assertTrue(nota2.getServices()[0].isDone());
+        assertEquals(3,NotaManager.notaList.size());
+        assertTrue(nota2.getServices().get(0).isDone());
         assertTrue(nota2.isDone());
     }
 
@@ -199,8 +200,8 @@ public class EmployeeSystemRunningTest {
                 """.replaceAll("\\s+","");
         String actual = outContent.toString().replaceAll("\\s+","");
         assertEquals(expectedOutput, actual);
-        assertEquals(3,NotaManager.notaList.length);
-        assertTrue(nota2.getServices()[1].isDone());
+        assertEquals(3,NotaManager.notaList.size());
+        assertTrue(nota2.getServices().get(1).isDone());
         assertTrue(nota2.isDone());
     }
 }

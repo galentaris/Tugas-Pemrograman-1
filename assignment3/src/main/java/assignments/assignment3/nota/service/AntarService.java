@@ -1,9 +1,9 @@
 package assignments.assignment3.nota.service;
-
-import assignments.assignment3.nota.Nota;
-
+//Mengimplementasikan semua methode dari interfave LaundryService
 public class AntarService implements LaundryService{
+    //Membuat atribut
     boolean isDone = false;
+
     @Override
     public String doWork() {
         isDone = true;

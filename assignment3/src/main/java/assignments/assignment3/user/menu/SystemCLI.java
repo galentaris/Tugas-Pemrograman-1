@@ -1,11 +1,13 @@
 package assignments.assignment3.user.menu;
 
+//Mengimport library-library yang dibutuhkan
 import assignments.assignment3.user.Member;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class SystemCLI {
+    //Membuat atribut SystemCLI
     protected ArrayList<Member> memberList = new ArrayList<Member>();
     protected Member loginMember;
     protected Scanner in;
@@ -20,15 +22,15 @@ public abstract class SystemCLI {
     public void login(Scanner in, String inputId, String inputPassword){
         Member authMember = authUser(inputId, inputPassword);
         
-        if (authMember != null) {
+        if (authMember != null) { //Saat user menginput ID dan Password yang tepat akan running methode run
             this.in = in;
             System.out.println("Login successful!");
-            run(in, authMember);
+            run(in, authMember); 
             return;
         }
 
         System.out.println("Invalid ID or password.");
-    };
+    }
 
     /**
      * Memulai sesi pengguna dan menangani input.
@@ -39,6 +41,7 @@ public abstract class SystemCLI {
     public void run(Scanner in, Member member){
         loginMember = member;
         boolean logout = false;
+        //Looping untuk menu saat login
         while (!logout) {
             displayMenu();
             int choice = in.nextInt();
@@ -58,10 +61,10 @@ public abstract class SystemCLI {
      */
     public Member authUser(String id, String pass) {
         for (Member user : memberList) {
-            if (!user.getId().equals(id)) {
+            if (!user.getId().equals(id)) { //Saat ID yang diinput user tidak sama akan diabaikan
                 continue;
             }
-            if(user.login(id, pass)){
+            if(user.login(id, pass)){ //Saat ID dan password yang diinput user sesuai
                 return user;
             }
             return null;
@@ -83,13 +86,6 @@ public abstract class SystemCLI {
             }
         }
         return false;
-    }
-
-    
-    public void printMemberList(){
-        for (Member i : memberList) {
-            System.out.println(i.getId());
-        }
     }
 
     /**
