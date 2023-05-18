@@ -7,10 +7,13 @@ import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.gui.member.AbstractMemberGUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class EmployeeSystemGUI extends AbstractMemberGUI {
     public static final String KEY = "EMPLOYEE";
+    private JTextArea kerjakanText;
+    private JTextArea displayText;
 
     public EmployeeSystemGUI(SystemCLI systemCLI) {
         super(systemCLI);
@@ -30,8 +33,9 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected JButton[] createButtons() {
-        // TODO
         return new JButton[]{
+            new JButton("It's nyuci time"),
+            new JButton("Display List Nota")
         };
     }
 
@@ -54,7 +58,12 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void displayNota() {
-        // TODO
+        if (NotaManager.notaList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Belum ada Nota!", "Info",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        initDisplayFrame();
+        displayText.setText(Nota.getNotaStatus());
     }
 
     /**
@@ -62,6 +71,60 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void cuci() {
-        // TODO
+        if (NotaManager.notaList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nothing to cuci here!", "Info",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        initKerjakanFrame();
+        kerjakanText.setText(Nota.kerjakan());
+    }
+
+    private void initKerjakanFrame() {
+        JOptionPane.showMessageDialog(null, String.format("Stand back! %s beginning to nyuci!\n", loggedInMember.getNama()),"Info",JOptionPane.INFORMATION_MESSAGE);
+
+        JFrame notaFrame = new JFrame("Detail Nota");
+        notaFrame.setSize(250, 200);
+        notaFrame.setVisible(true);
+        notaFrame.setLocationRelativeTo(null);
+        notaFrame.setLayout(new FlowLayout());
+        notaFrame.setResizable(false);
+
+        kerjakanText = new JTextArea();
+        kerjakanText.setEditable(false);
+
+        JScrollPane notaScroll = new JScrollPane(kerjakanText);
+        notaScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        notaScroll.setViewportView(kerjakanText);
+        notaScroll.getViewport().setPreferredSize(new Dimension(200,100));
+        notaFrame.add(notaScroll);
+
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(e -> notaFrame.dispose());
+
+        notaFrame.add(okButton);
+
+    }
+
+    private void initDisplayFrame() {
+        JFrame notaFrame = new JFrame("Detail Nota");
+        notaFrame.setSize(250, 200);
+        notaFrame.setVisible(true);
+        notaFrame.setLocationRelativeTo(null);
+        notaFrame.setLayout(new FlowLayout());
+        notaFrame.setResizable(false);
+
+        displayText = new JTextArea();
+        displayText.setEditable(false);
+
+        JScrollPane notaScroll = new JScrollPane(displayText);
+        notaScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        notaScroll.setViewportView(displayText);
+        notaScroll.getViewport().setPreferredSize(new Dimension(200,100));
+        notaFrame.add(notaScroll);
+
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(e -> notaFrame.dispose());
+
+        notaFrame.add(okButton);
     }
 }

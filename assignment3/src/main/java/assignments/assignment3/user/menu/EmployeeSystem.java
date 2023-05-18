@@ -2,6 +2,7 @@ package assignments.assignment3.user.menu;
 //Mengimport semua library yang dibutuhkan
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.user.Employee;
+import assignments.assignment3.user.Member;
 
 public class EmployeeSystem extends SystemCLI {
 
@@ -52,5 +53,9 @@ public class EmployeeSystem extends SystemCLI {
         System.out.println("1. It's nyuci time");
         System.out.println("2. Display List Nota");
         System.out.println("3. Logout");
+    }
+
+    public void addEmployee(Member member) {
+        memberList.add(member);
     }
 }

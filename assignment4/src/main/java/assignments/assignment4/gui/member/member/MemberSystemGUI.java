@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 
 public class MemberSystemGUI extends AbstractMemberGUI {
     public static final String KEY = "MEMBER";
+    private JTextArea notaText;
 
     public MemberSystemGUI(SystemCLI systemCLI) {
         super(systemCLI);
@@ -34,22 +35,23 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     @Override
     protected JButton[] createButtons() {
-        // TODO
         return new JButton[]{
+            new JButton("Saya Ingin Laundry"),
+            new JButton("Lihat Detail Nota")
         };
     }
 
     /**
      * Method ini mensupply ActionListener korespondensi dengan button yang dibuat createButtons()
      * sesuai dengan requirements MemberSystem.
-     *
+     *3
      * @return Array of ActionListener.
      * */
     @Override
     protected ActionListener[] createActionListeners() {
         return new ActionListener[]{
-                e -> createNota(),
-                e -> showDetailNota(),
+            e -> createNota(),
+            e -> showDetailNota(),
         };
     }
 
@@ -58,7 +60,17 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button pertama pada createButtons
      * */
     private void showDetailNota() {
-        // TODO
+        initNotaFrame();
+        if (loggedInMember.getNotaList().isEmpty()) {
+            notaText.setText("Belum pernah Laundry di CuciCuci hiks :(");
+            return;
+        }
+
+        String result = "";
+        for (Nota nota : loggedInMember.getNotaList()) {
+            result += nota.toString() + "\n";
+        }
+        notaText.setText(result);
     }
 
     /**
@@ -66,7 +78,29 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void createNota() {
-        // TODO
+        MainFrame.getInstance().navigateTo("CREATE_NOTA");
+    }
+
+    private void initNotaFrame() {
+        JFrame notaFrame = new JFrame("Detail Nota");
+        notaFrame.setSize(400, 400);
+        notaFrame.setVisible(true);
+        notaFrame.setLocationRelativeTo(null);
+        notaFrame.setLayout(new FlowLayout());
+        notaFrame.setResizable(false);
+
+        notaText = new JTextArea();
+        notaText.setEditable(false);
+        
+        JScrollPane notaScroll = new JScrollPane(notaText, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        notaScroll.setViewportView(notaText);
+        notaFrame.getContentPane().add(notaScroll);
+        notaScroll.getViewport().setPreferredSize(new Dimension(350,300));
+
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(e -> notaFrame.dispose());
+
+        notaFrame.add(okButton);
     }
 
 }

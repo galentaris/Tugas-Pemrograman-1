@@ -14,10 +14,12 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
     private JLabel loggedInAsLabel;
     protected Member loggedInMember;
     private final SystemCLI systemCLI;
+    protected GridBagConstraints gbc = new GridBagConstraints();
 
     public AbstractMemberGUI(SystemCLI systemCLI) {
         super(new BorderLayout());
         this.systemCLI = systemCLI;
+
         // Set up welcome label
         welcomeLabel = new JLabel("", SwingConstants.CENTER);
         welcomeLabel.setFont(new Font("Arial", Font.BOLD, 24));
@@ -43,12 +45,12 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
         JButton[] buttons = createButtons();
         ActionListener[] listeners = createActionListeners();
 
-        if (buttons.length != listeners.length) {
-            throw new IllegalStateException("Number of buttons and listeners must be equal.");
-        }
+        // if (buttons.length != listeners.length) {
+        //     throw new IllegalStateException("Number of buttons and listeners must be equal.");
+        // }
 
         JPanel buttonsPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        
         gbc.gridx = 0;
         gbc.gridy = GridBagConstraints.RELATIVE;
         gbc.fill = GridBagConstraints.NONE;
@@ -88,7 +90,12 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
      * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
      * */
     public boolean login(String id, String password) {
-        // TODO
+        loggedInMember = systemCLI.authUser(id, password);
+        if (loggedInMember != null) {
+            welcomeLabel.setText(String.format("Welcome! %s", loggedInMember.getNama()));
+            loggedInAsLabel.setText(String.format("Logged in as %s", loggedInMember.getId()));
+            return true;
+        }
         return false;
     }
 
