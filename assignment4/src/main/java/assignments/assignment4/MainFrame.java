@@ -1,4 +1,5 @@
 package assignments.assignment4;
+//Mengimport library-library yang dibutuhkan
 import assignments.assignment3.LoginManager;
 import assignments.assignment3.user.Employee;
 import assignments.assignment3.user.menu.EmployeeSystem;
@@ -14,8 +15,8 @@ import assignments.assignment4.gui.member.member.MemberSystemGUI;
 import javax.swing.*;
 import java.awt.*;
 
-
 public class MainFrame extends JFrame{
+    //Membuat atribut-atribut MainFrame
     private static MainFrame instance;
     private final Loginable[] loginablePanel;
     private final MemberSystem memberSystem = new MemberSystem();
@@ -30,12 +31,15 @@ public class MainFrame extends JFrame{
     private final MemberSystemGUI memberSystemGUI = new MemberSystemGUI(memberSystem);
     private final CreateNotaGUI createNotaGUI = new CreateNotaGUI(memberSystemGUI);
 
+    //Membuat constructor untuk MainFrame
     private MainFrame(){
         super("CuciCuciSystem");
-//        // for context dari 2 employee baru ini : https://ristek.link/karyawan-baru-cucicuci
+
+        //Menambahkan employee kedalam memberList dalam employee
         employeeSystem.addEmployee(new Employee("delta Epsilon Huha Huha", "ImplicitDiff"));
         employeeSystem.addEmployee(new Employee("Regret", "FansBeratKanaArima"));
         
+        //Mengatur Frame utama
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 432);
         setVisible(true);
@@ -44,7 +48,9 @@ public class MainFrame extends JFrame{
                 employeeSystemGUI,
                 memberSystemGUI,
         };
+
         initGUI();
+
         cards.show(mainPanel, HomeGUI.KEY);
         add(mainPanel);
     }
@@ -115,11 +121,11 @@ public class MainFrame extends JFrame{
     public boolean login(String id, String password){
         for (Loginable panel:
                 loginablePanel) {
-            if (true == panel.login(id, password)) return true;
+            //Saat id dan password sesuai akan me return true
+            if (true == panel.login(id, password)) return true; 
         }
         return false;
     }
-
 
     /**
      * Method untuk logout dari sistem, kemudian menampilkan halaman Home.

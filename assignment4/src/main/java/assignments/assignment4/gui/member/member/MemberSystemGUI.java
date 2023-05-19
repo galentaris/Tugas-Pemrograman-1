@@ -1,5 +1,6 @@
 package assignments.assignment4.gui.member.member;
 
+//Mengimport library-library
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.SystemCLI;
@@ -11,13 +12,16 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class MemberSystemGUI extends AbstractMemberGUI {
+    //Mendefinisikan atribut-atribut MemberSystemGUI
     public static final String KEY = "MEMBER";
     private JTextArea notaText;
 
+    //Membuat constructor MemberSystemGUI
     public MemberSystemGUI(SystemCLI systemCLI) {
         super(systemCLI);
     }
 
+    //Membuat getter
     @Override
     public String getPageName(){
         return KEY;
@@ -61,15 +65,19 @@ public class MemberSystemGUI extends AbstractMemberGUI {
      * */
     private void showDetailNota() {
         initNotaFrame();
+
+        //Saat member yang log in belum pernah memesan laundry
         if (loggedInMember.getNotaList().isEmpty()) {
             notaText.setText("Belum pernah Laundry di CuciCuci hiks :(");
             return;
         }
 
+        //Looping untuk mendapatkan masing2 detail nota dari setiap pesanan
         String result = "";
         for (Nota nota : loggedInMember.getNotaList()) {
             result += nota.toString() + "\n";
         }
+
         notaText.setText(result);
     }
 
@@ -81,7 +89,9 @@ public class MemberSystemGUI extends AbstractMemberGUI {
         MainFrame.getInstance().navigateTo("CREATE_NOTA");
     }
 
+    //Membuat methode untuk menginisiasi Nota Frame
     private void initNotaFrame() {
+        //Mengatur Frame untuk detail nota
         JFrame notaFrame = new JFrame("Detail Nota");
         notaFrame.setSize(400, 400);
         notaFrame.setVisible(true);
@@ -89,14 +99,17 @@ public class MemberSystemGUI extends AbstractMemberGUI {
         notaFrame.setLayout(new FlowLayout());
         notaFrame.setResizable(false);
 
+        //Mengatur textArea 
         notaText = new JTextArea();
         notaText.setEditable(false);
         
+        //Mengatur notaScroll
         JScrollPane notaScroll = new JScrollPane(notaText, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         notaScroll.setViewportView(notaText);
         notaFrame.getContentPane().add(notaScroll);
         notaScroll.getViewport().setPreferredSize(new Dimension(350,300));
 
+        //Mengatur button OK
         JButton okButton = new JButton("OK");
         okButton.addActionListener(e -> notaFrame.dispose());
 

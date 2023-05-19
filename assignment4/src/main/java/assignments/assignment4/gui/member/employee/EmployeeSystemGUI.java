@@ -1,5 +1,5 @@
 package assignments.assignment4.gui.member.employee;
-
+//Mengimport library-library
 import assignments.assignment3.nota.Nota;
 import assignments.assignment3.nota.NotaManager;
 
@@ -11,15 +11,16 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class EmployeeSystemGUI extends AbstractMemberGUI {
+    //Mendefinisikan atribut atribut yang dibutuhkan
     public static final String KEY = "EMPLOYEE";
     private JTextArea kerjakanText;
     private JTextArea displayText;
 
+    //Membuat constructor untuk EmployeeSystemGUI
     public EmployeeSystemGUI(SystemCLI systemCLI) {
         super(systemCLI);
     }
-
-
+    //Membuat getter
     @Override
     public String getPageName(){
         return KEY;
@@ -59,7 +60,7 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * */
     private void displayNota() {
         if (NotaManager.notaList.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Belum ada Nota!", "Info",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Belum ada Nota!", "Info", JOptionPane.ERROR_MESSAGE);
             return;
         }
         initDisplayFrame();
@@ -71,17 +72,20 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
      * Akan dipanggil jika pengguna menekan button kedua pada createButtons
      * */
     private void cuci() {
-        if (NotaManager.notaList.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nothing to cuci here!", "Info",JOptionPane.ERROR_MESSAGE);
+        if (NotaManager.notaList.isEmpty()) { //Saat belum ada member yang memesan nota
+            JOptionPane.showMessageDialog(null, "Nothing to cuci here!", "Info", JOptionPane.ERROR_MESSAGE);
             return;
         }
         initKerjakanFrame();
+
         kerjakanText.setText(Nota.kerjakan());
     }
 
+    //Membuat methode initKerjakanFrame untuk init gui frame kerjakan
     private void initKerjakanFrame() {
         JOptionPane.showMessageDialog(null, String.format("Stand back! %s beginning to nyuci!\n", loggedInMember.getNama()),"Info",JOptionPane.INFORMATION_MESSAGE);
 
+        //Mengatur Frame untuk kerjakan
         JFrame notaFrame = new JFrame("Detail Nota");
         notaFrame.setSize(250, 200);
         notaFrame.setVisible(true);
@@ -89,23 +93,28 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
         notaFrame.setLayout(new FlowLayout());
         notaFrame.setResizable(false);
 
+        //Mengatur text area yang berisi kerjakan
         kerjakanText = new JTextArea();
         kerjakanText.setEditable(false);
 
+        //Mengatur scrollPane
         JScrollPane notaScroll = new JScrollPane(kerjakanText);
         notaScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         notaScroll.setViewportView(kerjakanText);
         notaScroll.getViewport().setPreferredSize(new Dimension(200,100));
+
         notaFrame.add(notaScroll);
 
+        //Mengatur button OK
         JButton okButton = new JButton("OK");
         okButton.addActionListener(e -> notaFrame.dispose());
 
         notaFrame.add(okButton);
-
     }
 
+    //Methode initDisplayFrame untuk menginisiasi gui dari frame Display
     private void initDisplayFrame() {
+        //Mengatur Frame untuk Detail Nota
         JFrame notaFrame = new JFrame("Detail Nota");
         notaFrame.setSize(250, 200);
         notaFrame.setVisible(true);
@@ -113,15 +122,19 @@ public class EmployeeSystemGUI extends AbstractMemberGUI {
         notaFrame.setLayout(new FlowLayout());
         notaFrame.setResizable(false);
 
+        //Mengatur displayText untuk 
         displayText = new JTextArea();
         displayText.setEditable(false);
 
+        //Mengatur notaScroll
         JScrollPane notaScroll = new JScrollPane(displayText);
         notaScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         notaScroll.setViewportView(displayText);
         notaScroll.getViewport().setPreferredSize(new Dimension(200,100));
+
         notaFrame.add(notaScroll);
 
+        //Mengatur button OK
         JButton okButton = new JButton("OK");
         okButton.addActionListener(e -> notaFrame.dispose());
 

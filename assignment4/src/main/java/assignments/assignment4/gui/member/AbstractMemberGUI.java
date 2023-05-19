@@ -1,5 +1,5 @@
 package assignments.assignment4.gui.member;
-
+//Mengimport library-library
 import assignments.assignment3.user.Member;
 import assignments.assignment3.user.menu.SystemCLI;
 import assignments.assignment4.MainFrame;
@@ -10,12 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public abstract class AbstractMemberGUI extends JPanel implements Loginable{
+    //Membuat atribut AbstractMemberGUI
     private JLabel welcomeLabel;
     private JLabel loggedInAsLabel;
     protected Member loggedInMember;
     private final SystemCLI systemCLI;
     protected GridBagConstraints gbc = new GridBagConstraints();
 
+    //Membuat constructor AbstractMemberGUI
     public AbstractMemberGUI(SystemCLI systemCLI) {
         super(new BorderLayout());
         this.systemCLI = systemCLI;
@@ -42,13 +44,16 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
      * @return JPanel yang di dalamnya berisi Buttons.
      * */
     protected JPanel initializeButtons() {
+        //Membuat button dan actionListener
         JButton[] buttons = createButtons();
         ActionListener[] listeners = createActionListeners();
 
-        // if (buttons.length != listeners.length) {
-        //     throw new IllegalStateException("Number of buttons and listeners must be equal.");
-        // }
+        //Throw error saat action dan button tidak sama
+        if (buttons.length != listeners.length) {
+            throw new IllegalStateException("Number of buttons and listeners must be equal.");
+        }
 
+        //Mengatur button button dalam frame setelah login
         JPanel buttonsPanel = new JPanel(new GridBagLayout());
         
         gbc.gridx = 0;
@@ -90,8 +95,8 @@ public abstract class AbstractMemberGUI extends JPanel implements Loginable{
      * @return true jika ID dan password sesuai dengan instance member, false jika tidak.
      * */
     public boolean login(String id, String password) {
-        loggedInMember = systemCLI.authUser(id, password);
-        if (loggedInMember != null) {
+        loggedInMember = systemCLI.authUser(id, password); 
+        if (loggedInMember != null) { //Saat login berhasil
             welcomeLabel.setText(String.format("Welcome! %s", loggedInMember.getNama()));
             loggedInAsLabel.setText(String.format("Logged in as %s", loggedInMember.getId()));
             return true;
